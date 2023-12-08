@@ -8,7 +8,7 @@ import MatchDetails from './components/MatchDetails';
 import MatchesListing from './components/MatchesListing';
 
 function App() {
-  const apiKey = "RGAPI-d5deefc3-6a82-4361-b411-05798abc12c6";
+  const apiKey = "RGAPI-7a2dc30c-b123-430e-a91a-42f639151053";
   const [inputValue, setInputValue] = useState('');
   const [clicked, setClicked] = useState(false)
   const [matchIds, setMatchIds] = useState([]);
@@ -85,7 +85,7 @@ function App() {
                 <MatchDetails key={index} detail={detail} index={index} />
               ))} */}
               {matchDetails.map((detail, index) => (
-                <div className="matches-listing-container">
+                <div className="matches-listing-container" key={index}>
                   <MatchesListing inputValue={inputValue} key={index} detail={detail} index={index} />
                 </div>
               ))}

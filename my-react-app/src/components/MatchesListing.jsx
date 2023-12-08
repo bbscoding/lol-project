@@ -1,27 +1,75 @@
-import React from "react";
-
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 const MatchesListing = (props) => {
     const { detail, index } = props;
+    const [matchingPerk, setMatchingPerk] = useState(null);
 
     const selectedPlayer = detail.info.participants.find(participant => participant.summonerName.toLowerCase() === props.inputValue.toLowerCase());
-    const winCondition = selectedPlayer.win
-    return (
+    // console.log(selectedPlayer)
 
+    const winCondition = selectedPlayer.win
+    // useEffect(() => {
+    //     axios.get('https://ddragon.leagueoflegends.com/cdn/13.22.1/data/en_US/runesReforged.json')
+    //         .then(response => {
+    //             const runes = response.data;
+    //             selectedPlayer.perks.styles.forEach(item => {
+    //                 const valueToMatch = item.selections[0].perk.toString().slice(0, -2) + '00';
+    //                 runes.forEach(rune => {
+    //                     console.log(rune)
+    //                     console.log("dur")
+    //                     // rune.slots.forEach(slot => {
+    //                     //     slot.runes.forEach(perk => {
+    //                     //         if (rune.id == valueToMatch) {
+    //                     //             console.log(rune)
+    //                     //             setMatchingPerk(`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/${perk.icon}`);
+    //                     //             console.log("dur")
+    //                     //         }
+    //                     //     });
+    //                     // });
+    //                 });
+    //             });
+    //             console.log("cycle ends")
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
+    return (
         <div className={`match-listing-container my-2 flex bg-opacity-30 rounded border-solid border-2 backdrop-blur-lg p-5 ${winCondition ? "bg-blue-500 border-blue-500" : " bg-red-600 border-red-600"}`}>
 
             {/* Eşleşen oyuncunun bazı değerlerini göster */}
             {selectedPlayer && (
                 <div className="selected-player-detail-container flex">
-                    <div className="selected-player-champion-image">
-                        <img className="player-icon w-20 rounded-full" src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/${selectedPlayer.championName}.png`} alt="" />
-                    </div>
-                    <div className="selected-player-champion-details flex">
-                        <div className="selected-player-kda-details flex flex-col">
-                            <p className="text-left rtl:text-right text-gray-500 dark:text-gray-400">Oyuncu Adı: {selectedPlayer.summonerName}</p>
-                            <p className="text-left rtl:text-right text-gray-500 dark:text-gray-400">{selectedPlayer.kills} / {selectedPlayer.deaths} / {selectedPlayer.assists}</p>
-                            <p className="text-left rtl:text-right text-gray-500 dark:text-gray-400">KDA: {selectedPlayer.challenges.kda}</p>
+
+                    <div className="selected-player-champion-details flex flex-col">
+                        <div className="flex">
+                            <div className="selected-player-champion-image">
+                                <img className="player-icon w-12 rounded-full" src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/champion/${selectedPlayer.championName}.png`} alt="" />
+                                <div>
+                                    {/* {console.log(matchingPerk)}
+                                    {console.log("matchingPerk")} */}
+                                    {/* {matchingPerk && <img className="player-icon w-12 rounded-full" src={matchingPerk} alt="" />} */}
+                                </div>
+
+                            </div>
+                            <div>
+                                {/* <div>
+                                    {selectedPlayer.perks.styles && selectedPlayer.perks.styles
+                                        .filter(item => item)
+                                        .map(item => (
+                                            <p key={item.style}>{item.style}</p>
+                                        ))}
+                                </div> */}
+                            </div>
+                            {/* Selected Player adı 
+                            <p className="text-left rtl:text-right text-gray-500 dark:text-gray-400">Oyuncu Adı: {selectedPlayer.summonerName}</p> 
+                            */}
+                            <div className="flex flex-col">
+                                <p className="text-left rtl:text-right text-gray-500 dark:text-gray-400">{selectedPlayer.kills} / {selectedPlayer.deaths} / {selectedPlayer.assists}</p>
+                                <p className="text-left rtl:text-right text-gray-500 dark:text-gray-400">KDA: {selectedPlayer.challenges.kda.toFixed(2)}</p>
+                            </div>
                         </div>
-                        <div className="flex flex-col relative items-container">
+                        <div className="flex  relative items-container">
                             <div className="first-items-row flex">
                                 <img className="w-8" src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/item/${selectedPlayer.item0}.png`} alt="" />
                                 <img className="w-8" src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/item/${selectedPlayer.item1}.png`} alt="" />
@@ -32,10 +80,11 @@ const MatchesListing = (props) => {
                                 <img className="w-8" src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/item/${selectedPlayer.item4}.png`} alt="" />
                                 <img className="w-8" src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/item/${selectedPlayer.item5}.png`} alt="" />
                             </div>
-                            <div className="trinket-area absolute right-[74px] top-[14px]">
+                            <div className="trinket-area">
                                 <img className="w-8" src={`https://ddragon.leagueoflegends.com/cdn/13.22.1/img/item/${selectedPlayer.item6}.png`} alt="" />
                             </div>
                         </div>
+
                     </div>
                     {/* Diğer değerleri ekleyebilirsiniz */}
                 </div>
